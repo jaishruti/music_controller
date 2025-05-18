@@ -1,14 +1,12 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-
 import React from "react";
 import { createRoot } from "react-dom/client";
-import HomePage from "./HomePage";
+// import HomePage from "./HomePage";
 
-function App() {
+export default function App() {
   return (
     <div>
-      <HomePage />
+      {/* <HomePage /> */}
+      <h1>Testing React Code</h1>
     </div>
   );
 }
