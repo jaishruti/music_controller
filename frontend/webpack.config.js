@@ -20,6 +20,10 @@ export default {
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.css$/, // Add this to handle CSS files
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   optimization: {
