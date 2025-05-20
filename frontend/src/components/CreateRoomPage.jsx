@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Grid, Typography, FormControl, FormHelperText, RadioGroup, FormControlLabel, Radio, TextField, Button } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  FormControl,
+  FormHelperText,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  TextField,
+  Button,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function CreateRoomPage() {
@@ -35,17 +45,21 @@ export default function CreateRoomPage() {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} align="center">
+      <Grid item md={12} align="center">
         <Typography component="h4" variant="h4">
           Create A Room
         </Typography>
       </Grid>
-      <Grid item xs={12} align="center">
+      <Grid item md={12} align="center">
         <FormControl component="fieldset">
           <FormHelperText sx={{ textAlign: "center" }}>
             Guest Control of Playback State
           </FormHelperText>
-          <RadioGroup row defaultValue={guestCanPause ? "true" : "false"} onChange={handleGuestCanPause}>
+          <RadioGroup
+            row
+            defaultValue={guestCanPause ? "true" : "false"}
+            onChange={handleGuestCanPause}
+          >
             <FormControlLabel
               value="true"
               control={<Radio color="primary" />}
@@ -61,7 +75,7 @@ export default function CreateRoomPage() {
           </RadioGroup>
         </FormControl>
       </Grid>
-      <Grid item xs={12} align="center">
+      <Grid item md={12} align="center">
         <FormControl>
           <TextField
             required
@@ -76,12 +90,16 @@ export default function CreateRoomPage() {
           </FormHelperText>
         </FormControl>
       </Grid>
-      <Grid item xs={12} align="center">
-        <Button color="primary" variant="contained" onClick={handleRoomButtonPressed}>
+      <Grid item md={12} align="center">
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={handleRoomButtonPressed}
+        >
           Create A Room
         </Button>
       </Grid>
-      <Grid item xs={12} align="center">
+      <Grid item md={12} align="center">
         <Button color="secondary" variant="contained" component={Link} to="/">
           Back
         </Button>
