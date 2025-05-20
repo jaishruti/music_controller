@@ -13,6 +13,29 @@ class RoomView(generics.CreateAPIView):     #allows to create and view rooms
     queryset = Room.objects.all()
     serializer_class = RoomSerializers
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
+from .models import Room
+from .serializers import RoomSerializers
+
+class GetRoom(APIView):
+    serializer_class = RoomSerializers
+    lookup_url_kwarg = 'code'
+
+    def get(self, request, format=None):
+        code = request.GET.get(self.lookup_url_kwarg)
+        if not code:
+            return Response({"error": "Bad request: code not found in request"}, status=status.HTTP_400_BAD_REQUEST)
+
+        room = get_object_or_404(Room, code=code)
+        data = RoomSerializers(room).data
+        print(data)
+        data['is_host'] = request.session.session_key == room.host
+
+        return Response(data, status=status.HTTP_200_OK)
+
 class CreateRoomView(APIView):  #APIView overrides the methods 
     serializer_class = CreateRoomSerializer
     def post(self,request,format=None):

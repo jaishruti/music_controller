@@ -1,6 +1,7 @@
 import React from "react";
 import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
+import Room from "./Room";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function HomePage() {
@@ -11,7 +12,7 @@ export default function HomePage() {
         {/* JSX inside element */}
         <Route path="/join" element={<RoomJoinPage />} />
         <Route path="/create" element={<CreateRoomPage />} />
-        <Route path="/room/:roomCode" element={<Room />} />
+        <Route path="/room/:roomcode" element={<Room />} />
       </Routes>
     </Router>
   );
