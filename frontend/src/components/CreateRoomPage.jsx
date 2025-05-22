@@ -10,11 +10,12 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CreateRoomPage() {
   const [guestCanPause, setGuestCanPause] = useState(false);
   const [votesToSkip, setVotesToSkip] = useState(2);
+  const navigate = useNavigate();
 
   async function handleRoomButtonPressed() {
     const requestOptions = {
@@ -30,6 +31,7 @@ export default function CreateRoomPage() {
       const response = await fetch("/api/create-room", requestOptions);
       const data = await response.json();
       console.log(data);
+      navigate(`/room/${data.code}`);
     } catch (error) {
       console.error("Error creating room:", error);
     }
