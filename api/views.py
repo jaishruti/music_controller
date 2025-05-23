@@ -22,22 +22,29 @@ from .serializers import RoomSerializers
 
 class JoinRoom(APIView):
     serializer_class = RoomSerializers
-    lookup_url_kwargs = 'code'
+    lookup_url_kwarg = 'code'
     def post(self, request, format=None):
-        code = request.GET.get(self.lookup_url_kwargs)
+        #for post requests - request.dat.get and not request.GET.get
+        code = request.data.get(self.lookup_url_kwarg)
+        print(request.data)
+        #check for existing session
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        print(code)
         if not code:
-            return Response({"error":"Bad Request: code not found in request"}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            room = Room.objects.get(code=code)
-        except Room.DoesNotExist:
-            return Response({"error":"Bad Request: invalid code"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code":{code}, "error":"Bad Request: code not found in request"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        room = get_object_or_404(Room, code=code)
+        if not Room:
+            return Response({"code":{code},"error":"Bad Request: invalid code"}, status=status.HTTP_400_BAD_REQUEST)
         data = RoomSerializers(room).data
         if not request.session.session_key:
             request.session.save()
 
         #save the roomcode for that session inorder the know user had joined which room
         self.request.session['room_code'] = code
-        return Response({"message":'Room Joined'}, status= status.HTTP_200_OK)
+        return Response({"code":{code},"message":'Room Joined'}, status= status.HTTP_200_OK)
     
 class GetRoom(APIView):
     serializer_class = RoomSerializers
@@ -45,6 +52,7 @@ class GetRoom(APIView):
 
     def get(self, request, format=None):
         code = request.GET.get(self.lookup_url_kwarg)
+
         if not code:
             return Response({"error": "Bad request: code not found in request"}, status=status.HTTP_400_BAD_REQUEST)
 
