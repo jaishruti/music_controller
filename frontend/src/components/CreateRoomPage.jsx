@@ -46,7 +46,7 @@ export default function CreateRoomPage() {
   }
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} >
       <Grid item md={12} align="center">
         <Typography component="h4" variant="h4">
           Create A Room
