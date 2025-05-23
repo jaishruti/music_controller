@@ -28,17 +28,12 @@ export default function Room() {
       const response = await fetch(`/api/get-room?code=${roomcode}`);
       const data = await response.json();
       setGuestCanPause(data.guestCanPause);
-      if (data.votesToSkip !== undefined) {
-      setVotesToSkip(data.votesToSkip);
-    } else {
-      console.error("votesToSkip is missing in API response");
-    }
-
+      setVotesToSkip(data.votesToSkip ?? 2);
 
       setHost(data.isHost);
       console.log(data);
     } catch (error) {
-      console.log("Error while enterig the room");
+      console.log("Error while enterig the room", error);
     }
   }
   //   useEffect(() => {
@@ -53,7 +48,7 @@ export default function Room() {
   return (
     <div>
       <h3>{roomcode}</h3>
-      <p>Votes to Skip: {votesToSkip !== undefined ? votesToSkip : 3}</p>
+      <p>Votes to Skip: {votesToSkip}</p>
       <p>Guest Can Pause: {guestCanPause ? "Yes" : "No"}</p>
       <p>Host: {isHost ? "Yes" : "No"}</p>
     </div>

@@ -30,7 +30,7 @@ export default function CreateRoomPage() {
     try {
       const response = await fetch("/api/create-room", requestOptions);
       const data = await response.json();
-      console.log(data);
+      console.log("Room created response: ",data);
       navigate(`/room/${data.code}`);
     } catch (error) {
       console.error("Error creating room:", error);
@@ -42,7 +42,7 @@ export default function CreateRoomPage() {
   }
 
   function handleVotesToSkip(e) {
-    setVotesToSkip(parseInt(e.target.value, 10)); // Ensure it's a number
+    setVotesToSkip(e.target.value); // Ensure it's a number
   }
 
   return (
